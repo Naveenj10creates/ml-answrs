@@ -285,3 +285,131 @@ plt.xlabel('x')
 plt.ylabel('y')
 plt.legend()
 plt.show()
+
+EXP-7
+confusion matrix
+
+import numpy as np
+import seaborn as sns
+import matplotlib.pyplot as plt
+import pandas as pd
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import classification_report,confusion_matrix
+
+actual=np.array(['D','D','D','ND','D','D','ND','ND','ND','ND'])
+predicted=np.array(['D','D','ND','ND','D','D','ND','ND','D','D'])
+
+cm=confusion_matrix(actual,predicted)
+cm
+
+sns.heatmap(cm,annot=True,xticklabels=['D','ND'],yticklabels=['D','ND'])
+plt.gca().xaxis.set_label_position('top')
+plt.xlabel('Predicted')
+plt.gca().xaxis.tick_top()
+plt.ylabel('Actual')
+plt.title('Confusion Matrix')
+plt.show()
+print("Classification report:")
+print(classification_report(actual,predicted))
+
+from sklearn.metrics import classification_report,confusion_matrix,ConfusionMatrixDisplay
+
+y_true=['cat']*10+['Dog']*12+['Horse']*10
+
+y_pred=['cat']*8+['Dog']+['Horse']+['cat']*2+['Dog']*10+['Horse']*8+['dog']*2
+classes=['cat','Dog','Horse']
+
+cm=confusion_matrix(y_true,y_pred,labels=classes)
+
+disp=ConfusionMatrixDisplay(confusion_matrix=cm,display_labels=classes)
+disp.plot(cmap=plt.cm.Reds)
+plt.title('Confusion Matrix')
+plt.xlabel('Predicted')
+plt.ylabel('Actual')
+
+
+plt.gca().xaxis.set_label_position('top')
+plt.gca().xaxis.tick_top()
+plt.show()
+
+print("Classification report:")
+print(classification_report(y_true,y_pred))
+
+EXP-9
+k-means clustering
+
+import matplotlib.pyplot as plt
+from sklearn.cluster import KMeans
+
+x=[5,6,12,5,13,15,7,10,14,15]
+y=[21,19,24,17,16,25,24,22,21,21]
+
+data=list(zip(x,y))
+print(data)
+
+Kmeans=KMeans(n_clusters=3)
+Kmeans.fit(data)
+
+centroids=Kmeans.cluster_centers_
+labels=Kmeans.labels_
+print("centroids:")
+print(centroids)
+print("labels:")
+print(labels)
+
+plt.scatter(x,y,c=labels)
+plt.scatter(centroids[:,0],centroids[:,1],c='red',s=50,alpha=0.75)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+
+complete linkage 
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.cluster import AgglomerativeClustering
+x=[5,6,12,5,13,15,7,10,14,15,12]
+y=[21,19,24,17,16,25,24,22,21,21,20]
+
+data=list(zip(x,y))
+print(data)
+
+linkage_data=linkage(data,method='complete',metric='euclidean')
+dendrogram(linkage_data)
+plt.show
+
+hierarchical_cluster=AgglomerativeClustering(n_clusters=2,linkage='complete')
+labels=hierarchical_cluster.fit_predict(data)
+print(labels)
+
+plt.scatter(x,y,c=labels)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+
+
+single linkage 
+import numpy as np
+import matplotlib.pyplot as plt
+from scipy.cluster.hierarchy import dendrogram, linkage
+from sklearn.cluster import AgglomerativeClustering
+x=[5,6,12,5,13,15,7,10,14,15]
+y=[21,19,24,17,16,25,24,22,21,21]
+
+data=list(zip(x,y))
+print(data)
+
+linkage_data=linkage(data,method='single',metric='euclidean')
+dendrogram(linkage_data)
+plt.show
+
+hierarchical_cluster=AgglomerativeClustering(n_clusters=2,linkage='single')
+labels=hierarchical_cluster.fit_predict(data)
+print(labels)
+plt.scatter(x,y,c=labels)
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+
+
+
